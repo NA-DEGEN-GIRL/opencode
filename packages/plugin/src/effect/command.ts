@@ -19,6 +19,8 @@ export interface CommandDefinition {
 
 export interface CommandEditor {
   add(definition: CommandDefinition): void
+  /** The command an earlier transform added under `name`, so a later transform can wrap it. */
+  get(name: string): CommandDefinition | undefined
 }
 
 export interface CommandDomain extends Pick<CommandApi<unknown>, "list"> {

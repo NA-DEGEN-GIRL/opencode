@@ -87,7 +87,7 @@ const setup = (experimental: ConfigExperimental.Info | undefined) =>
         reload: () => Effect.void,
         transform: (callback) =>
           Effect.sync(() => {
-            callback({ add: (definition) => commands.push(definition) })
+            callback({ add: (definition) => commands.push(definition), get: () => undefined })
             return { dispose: Effect.void }
           }),
       },

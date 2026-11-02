@@ -27,6 +27,8 @@ export interface Definition {
 
 export type Editor = {
   add: (definition: Definition) => void
+  /** The definition an earlier transform added under `name`, so a later transform can wrap it. */
+  get: (name: string) => Definition | undefined
 }
 
 export class NotFoundError extends Schema.TaggedError<NotFoundError>()("Command.NotFoundError", {
@@ -64,6 +66,7 @@ export const layer = Layer.effect(
       initial: () => new Map(),
       editor: (editor) => ({
         add: (definition) => editor.set(definition.name, definition),
+        get: (name) => editor.get(name),
       }),
       notify: State.changes(
         (commands) => Array.from(commands.values(), info),

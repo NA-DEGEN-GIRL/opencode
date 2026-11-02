@@ -88,7 +88,9 @@ const run = Effect.fnUntraced(function* (seed?: Goal.State) {
       command: {
         list: () => Effect.die("unused command.list"),
         transform: (callback) =>
-          Effect.sync(() => callback({ add: (definition) => void commands.push(definition) })) as never,
+          Effect.sync(() =>
+            callback({ add: (definition) => void commands.push(definition), get: () => undefined }),
+          ) as never,
         reload: () => Effect.die("unused command.reload"),
       },
     }),
